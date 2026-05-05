@@ -1,0 +1,27 @@
+# Configuración de Servidores MCP
+# Formato compatible con el estándar de orquestación
+
+mcpServers:
+  # Ejemplo de servidor SQLite (usando uvx o npx)
+  sqlite:
+    command: "uvx"
+    args: 
+      - "mcp-server-sqlite"
+      - "--db-path"
+      - "./test.db"
+
+  # Ejemplo de servidor personalizado basado en Python
+  xubio:
+    command: "python3"
+    args: 
+      - "/absolute/path/to/your/xubio_server.py"
+    env:
+      XUBIO_API_KEY: "placeholder_if_not_in_env_file"
+
+  # Ejemplo de servidor local de archivos
+  filesystem:
+    command: "npx"
+    args:
+      - "-y"
+      - "@modelcontextprotocol/server-filesystem"
+      - "/home/agustin/proyectos_software"

@@ -18,6 +18,7 @@ El sistema permitirá a un usuario interactuar con servidores MCP a través de u
 - **RNF04: Seguridad**: Gestión de secretos y variables de entorno por servidor.
 - **RNF05: Robustez**: Cierre seguro de todos los subprocesos al finalizar la sesión.
 - **RNF06: Configuración Híbrida**: Servidores definidos en `config/mcp_config.yaml` y secretos en `.env`.
+- **RNF07: Runtime**: Compatibilidad con Python 3.10 o superior (requerido por el SDK de MCP).
 
 ## 4. Casos de Uso
 1. **Chat con Herramientas**: El usuario inicia una sesión y realiza múltiples consultas que requieren herramientas de diversos servidores.

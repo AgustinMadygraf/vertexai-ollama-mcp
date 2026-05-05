@@ -21,4 +21,5 @@ Este documento registra el proceso de investigación y descubrimiento de las tec
 ## 4. Patrones de Integración
 - **Arquitectura Hexagonal (Puertos y Adaptadores)**: Se ha seleccionado esta arquitectura para desacoplar el núcleo de la lógica (Core) de las tecnologías externas (Vertex AI, Ollama, MCP).
 - **Domain-Driven Design (DDD)**: Aplicado en el Core para modelar las entidades de chat y herramientas con un lenguaje ubicuo.
-- **Async/Await**: Uso intensivo de asincronía para la gestión de subprocesos MCP concurrentes.
+- **Async/Await & Python 3.10+**: Uso intensivo de asincronía y tipado moderno.
+- **SDK Oficial MCP**: Uso del paquete `mcp` para evitar reinventar el protocolo JSON-RPC.

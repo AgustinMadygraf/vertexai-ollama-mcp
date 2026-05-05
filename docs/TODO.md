@@ -4,7 +4,8 @@
 - [x] Estructura inicial de documentación (SRS, Discovery, TODO).
 - [x] Definición de Arquitectura Hexagonal y DDD.
 - [x] Diseño de configuración híbrida (YAML + .env).
-- [ ] Configuración de entorno virtual y dependencias básicas.
+- [x] Selección de stack tecnológico (Python 3.10+, SDK MCP).
+- [x] Creación de estructura de directorios (.gitkeep).
 
 ## Fase 2: Implementación Core & Adapters 🔌
 - [ ] Estructura de carpetas: `src/core` (Domain/Application) y `src/adapters` (CLI/AI/MCP).
