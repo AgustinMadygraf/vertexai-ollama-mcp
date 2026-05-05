@@ -12,6 +12,12 @@ class MessageRole(str, Enum):
     TOOL = "tool"
 
 @dataclass(frozen=True)
+class Intent:
+    tool_name: str
+    confidence: float
+    reason: str = ""
+
+@dataclass(frozen=True)
 class ToolDefinition:
     name: str
     description: str

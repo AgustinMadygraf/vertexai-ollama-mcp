@@ -3,7 +3,7 @@ Path: src/core/domain/ports.py
 """
 from abc import ABC, abstractmethod
 from typing import List, AsyncIterator, Optional
-from src.core.domain.entities import Message, ToolDefinition, ToolCall, ToolResult, CompletionChunk
+from src.core.domain.entities import Message, ToolDefinition, ToolCall, ToolResult, CompletionChunk, Intent
 
 class AIEnginePort(ABC):
     @abstractmethod
@@ -20,7 +20,7 @@ class AIEnginePort(ABC):
         self,
         prompt: str,
         tools: List[ToolDefinition]
-    ) -> Optional[ToolCall]:
+    ) -> Optional[Intent]:
         """Versión de alta velocidad que mapea directamente un prompt a una herramienta sin chat."""
         pass
 
