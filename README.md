@@ -1,35 +1,29 @@
-# Telegram Ollama MCP
+# VertexAI-Ollama MCP CLI
 
-Un puente entre Telegram, Ollama y el Protocolo de Contexto de Modelo (MCP).
+Este proyecto es una herramienta de línea de comandos (CLI) diseñada para actuar como un puente entre potentes modelos de lenguaje (LLMs) y servidores que implementan el **Model Context Protocol (MCP)**.
 
-## Requisitos
+Permite orquestar interacciones utilizando tanto la infraestructura en la nube de **Google Cloud Vertex AI** como modelos locales a través de **Ollama**.
 
-- Python 3.10+
-- Ollama instalado y corriendo
-- Un Token de Bot de Telegram (vía @BotFather)
+## 🚀 Objetivo
+Facilitar la ejecución de herramientas y el acceso a recursos expuestos por servidores MCP mediante una interfaz unificada y flexible.
 
-## Instalación
+## 💻 Uso Básico
+```bash
+# Iniciar una sesión interactiva
+python3 main.py --engine [vertex|ollama]
+```
+Una vez dentro de la sesión, los servidores MCP permanecerán activos para consultas instantáneas. Usa `--debug` para ver el tráfico JSON-RPC.
 
-1. Instalar dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🛠️ Tecnologías
+- **Lenguaje:** Python
+- **AI Engines:** Vertex AI (Gemini), Ollama
+- **Protocolo:** Model Context Protocol (MCP)
+- **Interfaz:** CLI (Command Line Interface)
 
-2. Configurar variables de entorno:
-   ```bash
-   cp .env.example .env
-   # Edita el archivo .env con tus credenciales
-   ```
+## 📂 Estructura de Documentación
+- [Discovery](docs/DISCOVERY.md): Investigación y hallazgos preliminares.
+- [SRS](docs/SRS.md): Especificación de Requisitos de Software.
+- [TODO](docs/TODO.md): Listado de tareas y progreso.
 
-3. Ejecutar el bot:
-   ```bash
-   python main.py
-   ```
-
-## Arquitectura
-
-El proyecto sigue los principios de Clean Architecture:
-- `src/entities`: Modelos de dominio.
-- `src/use_cases`: Lógica de negocio (ej. procesamiento de mensajes con herramientas).
-- `src/interface_adapters`: Gateways para Ollama y MCP.
-- `main.py`: Punto de entrada e infraestructura de Telegram.
+## ⚙️ Configuración (Próximamente)
+El proyecto utilizará variables de entorno para gestionar credenciales y configuraciones de servidores MCP.
