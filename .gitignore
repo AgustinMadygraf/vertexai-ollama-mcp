@@ -1,5 +1,17 @@
+# Environments
 .env
 .venv/
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Config
+config/mcp_config.yaml
+
+# Logs
+logs/
+
+# Scratch & Temporary
+scratch/
+smoke_test.py
+.coverage
