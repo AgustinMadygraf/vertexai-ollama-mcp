@@ -1,12 +1,12 @@
 # Software Requirements Specification (SRS)
 
 ## 1. Introducción
-El sistema permitirá a un usuario interactuar con servidores MCP a través de una CLI interactiva (REPL), utilizando modelos de lenguaje (Vertex AI u Ollama) para razonar sobre qué herramientas invocar.
+El sistema permitirá a un usuario interactuar con servidores MCP a través de una CLI interactiva (REPL), utilizando un motor de clasificación semántica local (OpenVINO) para ejecutar herramientas de forma instantánea.
 
 ## 2. Requisitos Funcionales
-- **RF01: Soporte Multitendencia**: Flag obligatorio `--engine [vertex|ollama]`.
+- **RF01: Soporte de Motores de IA**: El motor principal es `local-gpu` (Router semántico local).
 - **RF02: Orquestación Multiserver Automática**: El sistema intenta encender todos los servidores configurados al inicio de la sesión.
-- **RF03: Sesión Interactiva (REPL)**: Los servidores se mantienen vivos y el historial de chat reside en memoria mientras dure la sesión.
+- **RF03: Sesión Interactiva (REPL)**: Ejecución inmediata de herramientas basada en la intención del usuario.
 - **RF04: Resolución de Herramientas**: Mapeo y enrutamiento dinámico hacia subprocesos activos.
 - **RF05: Conectividad stdio**: Transporte concurrente mediante entrada/salida estándar.
 - **RF06: Streaming**: (Opcional) Soporte para respuestas progresivas.

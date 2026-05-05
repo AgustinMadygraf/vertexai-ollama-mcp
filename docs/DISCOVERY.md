@@ -22,4 +22,6 @@ Este documento registra el proceso de investigación y descubrimiento de las tec
 - **Arquitectura Hexagonal (Puertos y Adaptadores)**: Se ha seleccionado esta arquitectura para desacoplar el núcleo de la lógica (Core) de las tecnologías externas (Vertex AI, Ollama, MCP).
 - **Domain-Driven Design (DDD)**: Aplicado en el Core para modelar las entidades de chat y herramientas con un lenguaje ubicuo.
 - **Async/Await & Python 3.10+**: Uso intensivo de asincronía y tipado moderno.
-- **SDK Oficial MCP**: Uso del paquete `mcp` para evitar reinventar el protocolo JSON-RPC.
+- **Estrategia Local-First (GPU)**: Priorización de modelos de clasificación locales sobre GPU para minimizar latencia y coste.
+- **Hardware Detectado**: AMD Ryzen 5 3400G con Radeon Vega Graphics (Ubuntu 24.04).
+- **Inferencia**: Selección de **OpenVINO** como motor de aceleración para maximizar la APU Ryzen sin dependencias complejas de ROCm.

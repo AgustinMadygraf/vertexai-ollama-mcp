@@ -8,8 +8,10 @@
 - [x] Creación de estructura de directorios (.gitkeep).
 
 ## Fase 2: Implementación Core & Adapters 🔌
-- [ ] Estructura de carpetas: `src/core` (Domain/Application) y `src/adapters` (CLI/AI/MCP).
-- [ ] Definición de Puertos (Interfaces) para `AIEngine` y `MCPClient`.
+- [x] Estructura de carpetas y archivos base (`__init__.py`).
+- [ ] Implementación de `SemanticRouterAdapter` (Local-GPU / OpenVINO).
+- [ ] Definición de Puertos (Interfaces) adaptados para clasificación rápida.
+- [ ] Modelado de Dominio: `Intent`, `ToolCall`, `ToolResult`.
 - [ ] Modelado de Dominio: `ChatSession` (efímera), `Message`, `Tool`.
 - [ ] Implementación de `MultiProcessManager` (Arranque masivo automático).
 - [ ] Implementación de `Typer` CLI (Bucle REPL interactivo).
