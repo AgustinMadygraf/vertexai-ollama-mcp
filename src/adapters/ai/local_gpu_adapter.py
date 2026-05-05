@@ -1,7 +1,7 @@
 """
 Path: src/adapters/ai/local_gpu_adapter.py
 """
-import asyncio
+
 import numpy as np
 from typing import List, Optional, AsyncIterator
 from sentence_transformers import SentenceTransformer, util
@@ -34,12 +34,21 @@ class LocalGPUAdapter(AIEnginePort):
         if not tools:
             return None
 
-        # Enriquecemos la descripción con las claves que espera la herramienta
-        # Esto ayuda a distinguir entre 'get_product' (pide id) y 'get_products' (pide filtros)
+        # Enriquecemos la descripción con contexto de uso y parámetros
         tool_descriptions = []
         for t in tools:
             params = ", ".join(t.input_schema.get("properties", {}).keys())
-            context = f"Herramienta: {t.name}. Descripción: {t.description}. Parámetros aceptados: {params}"
+            
+            # Boost semántico basado en patrones de nombres
+            usage_context = ""
+            if t.name.startswith("list"):
+                usage_context = "IDEAL PARA: Contar cuántos elementos hay en total, listados generales y preguntas de 'cuántos'."
+            elif "report" in t.name or "total" in t.name:
+                usage_context = "PARA: Estadísticas avanzadas y reportes detallados."
+            elif t.name.endswith("_product") or t.name.endswith("_order"):
+                usage_context = "SOLO PARA: Detalles de UN solo elemento específico usando su ID."
+            
+            context = f"Herramienta: {t.name}. {usage_context} Descripción: {t.description}. Parámetros: {params}"
             tool_descriptions.append(context)
         
         # Generamos embeddings
