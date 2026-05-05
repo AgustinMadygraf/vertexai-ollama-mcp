@@ -17,6 +17,7 @@ El sistema permitirá a un usuario interactuar con servidores MCP a través de u
 - **RNF03: Observabilidad**: Los logs técnicos se guardan en archivos (`logs/`); la pantalla se reserva para el chat y alertas críticas mediante `Rich`. El modo `--debug` activa la visualización de tráfico en consola.
 - **RNF04: Seguridad**: Gestión de secretos y variables de entorno por servidor.
 - **RNF05: Robustez**: Cierre seguro de todos los subprocesos al finalizar la sesión.
+- **RNF06: Configuración Híbrida**: Servidores definidos en `config/mcp_config.yaml` y secretos en `.env`.
 
 ## 4. Casos de Uso
 1. **Chat con Herramientas**: El usuario inicia una sesión y realiza múltiples consultas que requieren herramientas de diversos servidores.

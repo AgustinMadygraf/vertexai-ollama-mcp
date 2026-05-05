@@ -7,12 +7,17 @@ Permite orquestar interacciones utilizando tanto la infraestructura en la nube d
 ## 🚀 Objetivo
 Facilitar la ejecución de herramientas y el acceso a recursos expuestos por servidores MCP mediante una interfaz unificada y flexible.
 
+## ⚙️ Configuración
+1. Copia `.env.example` a `.env` y completa tus credenciales de Google Cloud.
+2. Define tus servidores en `config/mcp_config.yaml`.
+3. Instala las dependencias: `pip install -r requirements.txt`.
+
 ## 💻 Uso Básico
 ```bash
-# Iniciar una sesión interactiva
-python3 main.py --engine [vertex|ollama]
+# Iniciar una sesión interactiva con Vertex AI
+python3 main.py --engine vertex
 ```
-Una vez dentro de la sesión, los servidores MCP permanecerán activos para consultas instantáneas. Usa `--debug` para ver el tráfico JSON-RPC.
+Usa `--debug` para inspeccionar el tráfico JSON-RPC con los servidores.
 
 ## 🛠️ Tecnologías
 - **Lenguaje:** Python

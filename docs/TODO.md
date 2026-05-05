@@ -1,8 +1,9 @@
 # TODO: Roadmap de Implementación
 
 ## Fase 1: Cimientos y Documentación 🏗️
-- [x] Estructura inicial de documentación.
-- [x] Definición de requisitos multi-server y debug.
+- [x] Estructura inicial de documentación (SRS, Discovery, TODO).
+- [x] Definición de Arquitectura Hexagonal y DDD.
+- [x] Diseño de configuración híbrida (YAML + .env).
 - [ ] Configuración de entorno virtual y dependencias básicas.
 
 ## Fase 2: Implementación Core & Adapters 🔌
