@@ -59,20 +59,23 @@ async def chatwoot_webhook(
     x_chatwoot_signature: str = Header(None)
 ):
     """Endpoint principal para recibir webhooks de Chatwoot."""
+    # 1. Validar que la petición venga de Cloudflare
+    infra_monitor = request.app.state.infra_monitor
+    if not infra_monitor.validate_request_headers(dict(request.headers)):
+        logger.warning("Acceso denegado: Petición no proviene de Cloudflare.")
+        raise HTTPException(status_code=403, detail="Access denied: Requests must come through Cloudflare")
+
+    # 2. Validar firma de Chatwoot
     body = await request.body()
-    
     if x_chatwoot_signature and not verify_signature(body, x_chatwoot_signature):
         logger.warning("Firma de Chatwoot inválida.")
         raise HTTPException(status_code=401, detail="Invalid signature")
 
     payload = await request.json()
     
-    # Obtenemos instancias (esto usualmente se hace con Inyección de Dependencias de FastAPI)
-    # Para este ejemplo rápido, las instanciamos o las recibimos de una "app state"
     orchestrator = request.app.state.orchestrator
     output_adapter = request.app.state.chatwoot_api
     
-    # Delegamos el trabajo pesado al background para responder rápido (200 OK)
     background_tasks.add_task(process_and_reply, payload, orchestrator, output_adapter)
     
     return {"status": "accepted"}

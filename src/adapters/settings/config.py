@@ -32,6 +32,11 @@ class AppSettings(BaseSettings):
     chatwoot_url: str = Field("https://app.chatwoot.com", alias="CHATWOOT_URL")
     chatwoot_api_token: Optional[str] = Field(None, alias="CHATWOOT_API_TOKEN")
     chatwoot_webhook_secret: Optional[str] = Field(None, alias="CHATWOOT_WEBHOOK_SECRET")
+
+    # Cloudflare
+    cloudflare_account_id: Optional[str] = Field(None, alias="CLOUDFLARE_ACCOUNT_ID")
+    cloudflare_api_token: Optional[str] = Field(None, alias="CLOUDFLARE_API_TOKEN")
+    cloudflare_tunnel_id: Optional[str] = Field(None, alias="CLOUDFLARE_TUNNEL_ID")
     
     model_config = SettingsConfigDict(
         env_file=".env", 

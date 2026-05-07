@@ -39,7 +39,7 @@
 - [ ] Integración de **GLiNER** en `LocalGPUAdapter` para extracción de argumentos real.
 
 ## Fase 7: Monitoreo e Infraestructura (Cloudflare) ☁️
-- [ ] Implementación de `InfrastructureMonitorPort`.
-- [ ] Adaptador: `CloudflareMonitorAdapter` (API Status + Header Validation).
-- [ ] Endpoint de salud: `/health` en `web_main.py`.
-- [ ] Middleware para validación obligatoria de `CF-Ray`.
+- [x] Implementación de `InfrastructureMonitorPort`.
+- [x] Adaptador: `CloudflareMonitorAdapter` (API Status + Header Validation).
+- [x] Endpoint de salud: `/health` en `web_main.py`.
+- [x] Middleware para validación obligatoria de `CF-Ray`.

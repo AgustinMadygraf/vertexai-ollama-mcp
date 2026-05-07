@@ -59,3 +59,14 @@ class ChatwootOutputPort(ABC):
     async def send_message(self, account_id: int, conversation_id: int, content: str) -> bool:
         """Envía un mensaje de respuesta a una conversación específica en Chatwoot."""
         pass
+
+class InfrastructureMonitorPort(ABC):
+    @abstractmethod
+    async def check_tunnel_status(self) -> dict:
+        """Verifica el estado de salud del túnel en la API de Cloudflare."""
+        pass
+
+    @abstractmethod
+    def validate_request_headers(self, headers: dict) -> bool:
+        """Valida si los headers de una petición entrante son consistentes con Cloudflare."""
+        pass
