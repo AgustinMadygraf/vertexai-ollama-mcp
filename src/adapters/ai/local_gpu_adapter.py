@@ -20,7 +20,15 @@ class LocalGPUAdapter(AIEnginePort):
     def __init__(self):
         self.model_name = settings.local_gpu_model_name
         logger.info(f"Cargando modelo de IA local: {self.model_name}...")
-        self.model = SentenceTransformer(self.model_name)
+        
+        try:
+            # Intentamos cargar el modelo en modo offline para evitar warnings y latencia de red
+            self.model = SentenceTransformer(self.model_name, local_files_only=True)
+        except Exception:
+            # Si falla (ej. primera vez), cargamos normalmente permitiendo la descarga
+            logger.info("Modelo no encontrado localmente, iniciando descarga desde HF Hub...")
+            self.model = SentenceTransformer(self.model_name, local_files_only=False)
+            
         logger.info("Modelo cargado correctamente.")
 
     async def classify_intent(

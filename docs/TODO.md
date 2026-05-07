@@ -43,3 +43,9 @@
 - [x] Adaptador: `CloudflareMonitorAdapter` (API Status + Header Validation).
 - [x] Endpoint de salud: `/health` en `web_main.py`.
 - [x] Middleware para validación obligatoria de `CF-Ray`.
+
+## Fase 8: Self-Healing & Watchdog 🐕
+- [x] Script de monitoreo externo `scripts/watchdog.py`.
+- [x] Lógica de auto-resolución para `HF_TOKEN` (Modo Offline).
+- [ ] Auto-detección de configuración de Cloudflare Tunnel.
+- [ ] Alertas automáticas vía Chatwoot ante fallos de infraestructura.

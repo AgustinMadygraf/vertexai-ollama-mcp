@@ -23,6 +23,7 @@ console = Console()
 
 def print_logo():
     """Imprime un logo estético al arrancar."""
+    console.clear()
     console.print(Panel.fit(
         "[bold cyan]MCP BRIDGE[/bold cyan] [bold white]v1.1.0[/bold white]\n"
         "[dim]High-Performance Semantic Routing & Observability[/dim]",
