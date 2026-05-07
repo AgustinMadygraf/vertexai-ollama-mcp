@@ -24,6 +24,7 @@ Usa `--debug` para inspeccionar el tráfico JSON-RPC con los servidores.
 - **AI Engines:** Vertex AI (Gemini), Ollama, Sentence Transformers (Local GPU)
 - **Protocolo:** Model Context Protocol (MCP)
 - **Interfaz:** CLI (Command Line Interface) & Webhooks (Próximamente: Chatwoot)
+- **Infraestructura:** Cloudflare Tunnels (Validación & Health Check)
 
 ## 📂 Estructura de Documentación
 - [Discovery](docs/DISCOVERY.md): Investigación y hallazgos preliminares.

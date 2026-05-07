@@ -37,3 +37,9 @@
 - [x] Refactor de `Orchestrator` para soporte multi-sesión con persistencia.
 - [x] Implementación de validación de firma HMAC (X-Chatwoot-Signature).
 - [ ] Integración de **GLiNER** en `LocalGPUAdapter` para extracción de argumentos real.
+
+## Fase 7: Monitoreo e Infraestructura (Cloudflare) ☁️
+- [ ] Implementación de `InfrastructureMonitorPort`.
+- [ ] Adaptador: `CloudflareMonitorAdapter` (API Status + Header Validation).
+- [ ] Endpoint de salud: `/health` en `web_main.py`.
+- [ ] Middleware para validación obligatoria de `CF-Ray`.

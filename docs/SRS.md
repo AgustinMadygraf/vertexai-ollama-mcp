@@ -12,6 +12,7 @@ El sistema permitirá a un usuario interactuar con servidores MCP a través de u
 - **RF06: Streaming**: (Opcional) Soporte para respuestas progresivas.
 - **RF07: Integración con Chatwoot**: El sistema debe poder recibir mensajes vía Webhook desde Chatwoot y responder utilizando su API.
 - **RF08: Gestión de Sesiones Persistentes**: El sistema debe mantener el historial de conversación por `conversation_id` de Chatwoot.
+- **RF09: Validación de Infraestructura (Cloudflare)**: El sistema debe verificar que las peticiones web provengan de Cloudflare y monitorear el estado del túnel.
 
 ## 3. Requisitos No Funcionales
 - **RNF01: Arquitectura Hexagonal**: Separación estricta entre Core y Adaptadores.
@@ -23,6 +24,7 @@ El sistema permitirá a un usuario interactuar con servidores MCP a través de u
 - **RNF07: Runtime**: Compatibilidad con Python 3.10 o superior (requerido por el SDK de MCP).
 - **RNF08: Alta Disponibilidad y Escala**: El sistema debe soportar procesamiento asíncrono para manejar múltiples webhooks concurrentes.
 - **RNF09: Seguridad de Webhooks**: Validación de firmas HMAC para peticiones entrantes de Chatwoot.
+- **RNF10: Monitoreo de Red**: El sistema debe exponer un estado de salud (Health Check) que incluya la conectividad de los servidores MCP y el túnel Cloudflare.
 
 ## 4. Casos de Uso
 1. **Chat con Herramientas**: El usuario inicia una sesión y realiza múltiples consultas que requieren herramientas de diversos servidores.
