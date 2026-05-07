@@ -29,3 +29,11 @@
 ## Fase 5: Testing y Refinamiento 🧪
 - [ ] Unit testing de los Gateways.
 - [ ] Mocking de servidores MCP para integración.
+
+## Fase 6: Escalabilidad y Webhooks (Chatwoot) 🌐
+- [ ] Implementación de servidor FastAPI para Webhooks.
+- [ ] Adaptador de Entrada: `ChatwootWebhookAdapter`.
+- [ ] Adaptador de Salida: `ChatwootAPIAdapter` (para enviar respuestas).
+- [ ] Refactor de `Orchestrator` para soporte multi-sesión con persistencia.
+- [ ] Implementación de validación de firma HMAC (X-Chatwoot-Signature).
+- [ ] Integración de **GLiNER** en `LocalGPUAdapter` para extracción de argumentos real.

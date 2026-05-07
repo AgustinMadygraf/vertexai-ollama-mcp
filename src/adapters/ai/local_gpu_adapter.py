@@ -77,3 +77,27 @@ class LocalGPUAdapter(AIEnginePort):
         tools: List[ToolDefinition]
     ) -> AsyncIterator[CompletionChunk]:
         yield CompletionChunk(text="El motor local actualmente solo soporta clasificación directa.", is_final=True)
+
+    async def extract_arguments(
+        self,
+        prompt: str,
+        tool: ToolDefinition
+    ) -> dict:
+        """
+        Extracción simplificada. 
+        TODO: Implementar NER o un modelo pequeño de extracción para local-gpu.
+        Por ahora, intenta buscar números que podrían ser IDs.
+        """
+        import re
+        args = {}
+        
+        # Ejemplo: Si la herramienta tiene un campo 'id' o 'clienteId'
+        properties = tool.input_schema.get("properties", {})
+        for prop_name in properties:
+            if "id" in prop_name.lower():
+                # Buscamos un número en el prompt
+                match = re.search(r'\b(\d+)\b', prompt)
+                if match:
+                    args[prop_name] = int(match.group(1))
+        
+        return args

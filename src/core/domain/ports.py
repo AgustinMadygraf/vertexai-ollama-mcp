@@ -24,6 +24,15 @@ class AIEnginePort(ABC):
         """Versión de alta velocidad que mapea directamente un prompt a una herramienta sin chat."""
         pass
 
+    @abstractmethod
+    async def extract_arguments(
+        self,
+        prompt: str,
+        tool: ToolDefinition
+    ) -> dict:
+        """Extrae los argumentos necesarios para una herramienta a partir del prompt."""
+        pass
+
 class MCPClientPort(ABC):
     @abstractmethod
     async def initialize(self) -> None:

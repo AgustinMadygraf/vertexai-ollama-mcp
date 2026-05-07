@@ -21,9 +21,9 @@ Usa `--debug` para inspeccionar el tráfico JSON-RPC con los servidores.
 
 ## 🛠️ Tecnologías
 - **Lenguaje:** Python
-- **AI Engines:** Vertex AI (Gemini), Ollama
+- **AI Engines:** Vertex AI (Gemini), Ollama, Sentence Transformers (Local GPU)
 - **Protocolo:** Model Context Protocol (MCP)
-- **Interfaz:** CLI (Command Line Interface)
+- **Interfaz:** CLI (Command Line Interface) & Webhooks (Próximamente: Chatwoot)
 
 ## 📂 Estructura de Documentación
 - [Discovery](docs/DISCOVERY.md): Investigación y hallazgos preliminares.

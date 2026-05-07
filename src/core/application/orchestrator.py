@@ -13,11 +13,11 @@ class Orchestrator:
         self.ai_engine = ai_engine
         self.mcp_client = mcp_client
 
-    async def process_message(self, user_prompt: str) -> str:
+    async def process_message(self, user_prompt: str, session_id: str = "default") -> str:
         """
         Ciclo de vida de un mensaje con observabilidad y ruteo semántico.
         """
-        logger.info(f"Procesando prompt: '{user_prompt}'")
+        logger.info(f"[{session_id}] Procesando prompt: '{user_prompt}'")
         start_time = time.time()
         
         try:
@@ -30,18 +30,25 @@ class Orchestrator:
             if not intent:
                 return "No se encontraron herramientas disponibles en los servidores MCP."
             
-            logger.info(f"Ejecución forzada: {intent.tool_name} (Confianza: {intent.confidence:.2f})")
-            
-            logger.info(f"Intento clasificado: {intent.tool_name} (Confianza: {intent.confidence:.2f})")
+            logger.info(f"[{session_id}] Intento clasificado: {intent.tool_name} (Confianza: {intent.confidence:.2f})")
 
-            # 3. Ejecución de la herramienta
+            # Buscar la definición de la herramienta para extraer argumentos
+            tool_def = next((t for t in tools if t.name == intent.tool_name), None)
+            
+            # 3. Extracción de argumentos
+            arguments = {}
+            if tool_def:
+                arguments = await self.ai_engine.extract_arguments(user_prompt, tool_def)
+                logger.info(f"[{session_id}] Argumentos extraídos: {arguments}")
+
+            # 4. Ejecución de la herramienta
             result: ToolResult = await self.mcp_client.call_tool(
                 intent.tool_name, 
-                {} # TODO: Extractor de argumentos
+                arguments
             )
             
             elapsed = time.time() - start_time
-            logger.info(f"Proceso completado en {elapsed:.2f}s")
+            logger.info(f"[{session_id}] Proceso completado en {elapsed:.2f}s")
 
             if result.is_error:
                 return f"❌ Error en {intent.tool_name}: {result.content}"
