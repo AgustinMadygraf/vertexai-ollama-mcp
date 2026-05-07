@@ -9,6 +9,8 @@ mcp>=1.0.0
 # CLI & UI
 typer[all]>=0.12.3
 rich>=13.7.1
+fastapi>=0.110.0
+uvicorn>=0.27.0
 
 # Configuration & Settings
 pydantic-settings>=2.2.1

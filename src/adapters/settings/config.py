@@ -28,6 +28,11 @@ class AppSettings(BaseSettings):
     debug: bool = Field(False, alias="DEBUG")
     log_level: str = Field("INFO", alias="LOG_LEVEL")
     
+    # Chatwoot
+    chatwoot_url: str = Field("https://app.chatwoot.com", alias="CHATWOOT_URL")
+    chatwoot_api_token: Optional[str] = Field(None, alias="CHATWOOT_API_TOKEN")
+    chatwoot_webhook_secret: Optional[str] = Field(None, alias="CHATWOOT_WEBHOOK_SECRET")
+    
     model_config = SettingsConfigDict(
         env_file=".env", 
         env_file_encoding="utf-8",

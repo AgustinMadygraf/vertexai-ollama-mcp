@@ -53,3 +53,9 @@ class MCPClientPort(ABC):
     async def call_tool(self, tool_name: str, arguments: dict) -> ToolResult:
         """Ejecuta una herramienta específica en el servidor correspondiente."""
         pass
+
+class ChatwootOutputPort(ABC):
+    @abstractmethod
+    async def send_message(self, account_id: int, conversation_id: int, content: str) -> bool:
+        """Envía un mensaje de respuesta a una conversación específica en Chatwoot."""
+        pass
