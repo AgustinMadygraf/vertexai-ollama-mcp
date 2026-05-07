@@ -38,9 +38,14 @@ Este documento registra el proceso de investigación y descubrimiento de las tec
 - **Estrategia de Respuesta Asíncrona**: Para cumplir con el timeout de 5s, el adaptador de webhook debe delegar el procesamiento al `Orchestrator` de forma asíncrona (ej. mediante `asyncio.create_task` o una cola de tareas) y responder `200 OK` al instante.
 - **Documentación de Contrato**: Se ha creado `docs/CHATWOOT_CONTRACT.md` para formalizar el acuerdo entre el adaptador de entrada y la lógica de negocio, siguiendo las mejores prácticas de Arquitectura Hexagonal.
 
-## 7. Próximos Pasos de Investigación
-- Evaluar el modelo `gliner_small-v2.1` para ejecución en la APU Ryzen 3400G.
-- Investigar la persistencia de `ChatSession` usando SQLite para mantener el contexto en Chatwoot.
+## 7. Próximos Pasos de Investigación (Priorizados)
+- **Persistencia de Contexto Conversacional**: Implementar `ChatSessionRepository` usando SQLite para que el orquestador tenga memoria del historial.
+- **Benchmark de Concurrencia en APU**: Medir el impacto de múltiples webhooks simultáneos sobre la latencia de inferencia de OpenVINO.
+- **Validación de Argumentos Opcionales**: Investigar cómo GLiNER maneja esquemas de herramientas con parámetros opcionales.
+
+## 9. Decisiones de Arquitectura Tomadas
+- **Infraestructura**: Se adoptó un **Composite Adapter** para soportar Cloudflare y ngrok simultáneamente, garantizando alta disponibilidad.
+- **Orquestación**: Se implementó la **Opción D** para el flujo de mensajes, priorizando la UX mediante el manejo de saludos y aclaraciones proactivas.
 
 ## 8. Monitoreo de Infraestructura (Cloudflare & ngrok)
 - **Estrategia de Alta Disponibilidad (HA)**: Se ha incorporado **ngrok** como túnel secundario/redundante. Esto permite mantener la conectividad si Cloudflare presenta degradación o problemas de configuración.

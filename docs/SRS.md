@@ -12,7 +12,8 @@ El sistema permitirá a un usuario interactuar con servidores MCP a través de u
 - **RF06: Streaming**: (Opcional) Soporte para respuestas progresivas.
 - **RF07: Integración con Chatwoot**: El sistema debe poder recibir mensajes vía Webhook desde Chatwoot y responder utilizando su API.
 - **RF08: Gestión de Sesiones Persistentes**: El sistema debe mantener el historial de conversación por `conversation_id` de Chatwoot.
-- **RF09: Validación de Infraestructura Dual (Cloudflare/ngrok)**: El sistema debe verificar que las peticiones web provengan de fuentes autorizadas (Cloudflare o ngrok) y monitorear el estado de ambos túneles si están configurados.
+- **RF09: Validación de Infraestructura Dual (Cloudflare/ngrok)**: El sistema verifica que las peticiones provengan de túneles autorizados mediante un adaptador compuesto.
+- **RF10: Inteligencia de Interacción (Greetings & Confidence)**: El sistema identifica saludos, se identifica como Bridge MCP y solicita aclaraciones ante peticiones de baja confianza semántica (< 0.35).
 
 ## 3. Requisitos No Funcionales
 - **RNF01: Arquitectura Hexagonal**: Separación estricta entre Core y Adaptadores.
