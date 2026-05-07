@@ -37,6 +37,10 @@ class AppSettings(BaseSettings):
     cloudflare_account_id: Optional[str] = Field(None, alias="CLOUDFLARE_ACCOUNT_ID")
     cloudflare_api_token: Optional[str] = Field(None, alias="CLOUDFLARE_API_TOKEN")
     cloudflare_tunnel_id: Optional[str] = Field(None, alias="CLOUDFLARE_TUNNEL_ID")
+
+    # ngrok
+    ngrok_auth_token: Optional[str] = Field(None, alias="NGROK_AUTH_TOKEN")
+    ngrok_api_url: str = Field("http://localhost:4040/api/tunnels", alias="NGROK_API_URL")
     
     model_config = SettingsConfigDict(
         env_file=".env", 

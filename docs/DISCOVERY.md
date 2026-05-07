@@ -42,7 +42,10 @@ Este documento registra el proceso de investigación y descubrimiento de las tec
 - Evaluar el modelo `gliner_small-v2.1` para ejecución en la APU Ryzen 3400G.
 - Investigar la persistencia de `ChatSession` usando SQLite para mantener el contexto en Chatwoot.
 
-## 8. Monitoreo de Infraestructura (Cloudflare)
-- **Validación de Headers**: Se ha identificado que `CF-Ray` y `CF-Connecting-IP` son los headers clave para asegurar que el tráfico pasa por Cloudflare.
-- **API de Tunnels**: El endpoint `GET /accounts/{account_id}/tunnels` permite obtener el estado de salud (`healthy`, `down`) de los túneles activos.
-- **Arquitectura de Salud**: Se propone un modelo de "Health Aggregator" que recolecte el estado de los adaptadores de IA, MCP y Red para exponerlo en una interfaz unificada.
+## 8. Monitoreo de Infraestructura (Cloudflare & ngrok)
+- **Estrategia de Alta Disponibilidad (HA)**: Se ha incorporado **ngrok** como túnel secundario/redundante. Esto permite mantener la conectividad si Cloudflare presenta degradación o problemas de configuración.
+- **Validación de Headers**: Además de `CF-Ray` para Cloudflare, se validan headers específicos de ngrok como `x-forwarded-for` para asegurar el origen de las peticiones.
+- **API de Tunnels**:
+  - Cloudflare: `GET /accounts/{account_id}/tunnels` para estado global.
+  - ngrok: `GET http://localhost:4040/api/tunnels` para monitoreo local dinámico.
+- **Arquitectura de Salud**: El "Health Aggregator" ahora soporta múltiples proveedores de túnel, reportando un estado consolidado en el endpoint `/health`.

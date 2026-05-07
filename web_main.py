@@ -15,7 +15,7 @@ from src.adapters.mcp.process_manager import MultiProcessManager
 from src.adapters.ai.local_gpu_adapter import LocalGPUAdapter
 from src.core.application.orchestrator import Orchestrator
 from src.adapters.chatwoot.api_adapter import ChatwootAPIAdapter
-from src.adapters.monitoring.cloudflare_adapter import CloudflareMonitorAdapter
+from src.adapters.monitoring.composite_adapter import CompositeMonitorAdapter
 from src.adapters.chatwoot.webhook_adapter import router as chatwoot_router
 from src.adapters.settings.logger import logger
 
@@ -43,7 +43,7 @@ async def lifespan(app: FastAPI):
     ai_adapter = LocalGPUAdapter()
     app.state.orchestrator = Orchestrator(ai_adapter, mcp_manager)
     app.state.chatwoot_api = ChatwootAPIAdapter()
-    app.state.infra_monitor = CloudflareMonitorAdapter()
+    app.state.infra_monitor = CompositeMonitorAdapter()
     app.state.mcp_manager = mcp_manager
     
     logger.info("[bold green]✓[/bold green] Sistema de orquestación listo.")
@@ -109,7 +109,7 @@ async def health_check(request: Request):
         "status": health_status,
         "timestamp": time.time(),
         "infrastructure": {
-            "cloudflare": cf_status,
+            "tunnels": cf_status,
             "system": {
                 "cpu_usage_percent": cpu_percent,
                 "memory_usage_percent": mem.percent,

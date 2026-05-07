@@ -59,11 +59,11 @@ async def chatwoot_webhook(
     x_chatwoot_signature: str = Header(None)
 ):
     """Endpoint principal para recibir webhooks de Chatwoot."""
-    # 1. Validar que la petición venga de Cloudflare
+    # 1. Validar que la petición venga de un túnel autorizado (Cloudflare/ngrok)
     infra_monitor = request.app.state.infra_monitor
     if not infra_monitor.validate_request_headers(dict(request.headers)):
-        logger.warning("Acceso denegado: Petición no proviene de Cloudflare.")
-        raise HTTPException(status_code=403, detail="Access denied: Requests must come through Cloudflare")
+        logger.warning("Acceso denegado: Petición no proviene de un túnel autorizado.")
+        raise HTTPException(status_code=403, detail="Access denied: Requests must come through an authorized tunnel")
 
     # 2. Validar firma de Chatwoot
     body = await request.body()
