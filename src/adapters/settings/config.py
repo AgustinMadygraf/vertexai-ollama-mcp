@@ -16,6 +16,7 @@ class AppSettings(BaseSettings):
     # Google Cloud / Vertex AI (Postponed but kept for structure)
     google_cloud_project: Optional[str] = Field(None, alias="GOOGLE_CLOUD_PROJECT")
     google_cloud_location: Optional[str] = Field("us-central1", alias="GOOGLE_CLOUD_LOCATION")
+    vertex_ai_model_name: str = Field("gemini-1.5-flash", alias="VERTEX_AI_MODEL_NAME")
     
     # Ollama (Postponed but kept for structure)
     ollama_base_url: str = Field("http://localhost:11434", alias="OLLAMA_BASE_URL")

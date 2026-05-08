@@ -9,6 +9,11 @@
 
 ## Fase 2: Implementación Core & Adapters 🔌
 - [x] Estructura de carpetas y archivos base (`__init__.py`).
+- [x] Implementar VertexAIAdapter con Tool Calling.
+- [x] Subir cobertura de tests al 64%.
+- [ ] Implementar OllamaAdapter con Tool Calling nativo.
+- [ ] Alcanzar 80% de cobertura global (Pendiente: MCP ProcessManager y CLI).
+- [ ] Implementar persistencia de sesiones en SQLite.
 - [ ] Implementación de `SemanticRouterAdapter` (Local-GPU / OpenVINO).
 - [ ] Definición de Puertos (Interfaces) adaptados para clasificación rápida.
 - [ ] Modelado de Dominio: `Intent`, `ToolCall`, `ToolResult`.
