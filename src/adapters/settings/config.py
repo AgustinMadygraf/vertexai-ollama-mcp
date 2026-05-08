@@ -28,6 +28,8 @@ class AppSettings(BaseSettings):
     # Application Logic
     debug: bool = Field(False, alias="DEBUG")
     log_level: str = Field("INFO", alias="LOG_LEVEL")
+    database_path: str = Field("data/chat_history.db", alias="DATABASE_PATH")
+    ai_provider: str = Field("ollama", alias="AI_PROVIDER")
     
     # Chatwoot
     chatwoot_url: str = Field("https://app.chatwoot.com", alias="CHATWOOT_URL")

@@ -11,8 +11,11 @@ from rich.live import Live
 from rich.table import Table
 
 from src.adapters.mcp.process_manager import MultiProcessManager
-from src.adapters.ai.local_gpu_adapter import LocalGPUAdapter
+from src.adapters.ai.vertex_adapter import VertexAIAdapter
+from src.adapters.ai.ollama_adapter import OllamaAdapter
+from src.adapters.persistence.sqlite_adapter import SQLiteChatRepository
 from src.core.application.orchestrator import Orchestrator
+from src.adapters.settings.config import settings
 from src.adapters.settings.logger import logger
 
 app = typer.Typer(
@@ -23,18 +26,26 @@ app = typer.Typer(
 console = Console()
 
 async def interactive_loop():
-    # El clear se hace en el comando que invoca este loop
     console.print(Panel.fit(
         "[bold blue]MCP CLI Bridge[/bold blue]\n"
-        "[green]Motor Local-GPU Activado (OpenVINO Optimized)[/green]\n"
+        f"[green]Motor AI: {settings.ai_provider.upper()}[/green]\n"
         "Escribe 'salir' para terminar.",
-        title="[bold white]V1.0.0[/bold white]"
+        title="[bold white]V1.1.0[/bold white]"
     ))
 
     # Inicialización de componentes
     mcp_manager = MultiProcessManager()
-    ai_adapter = LocalGPUAdapter()
-    orchestrator = Orchestrator(ai_adapter, mcp_manager)
+    
+    # Seleccionamos adaptador según config
+    if settings.ai_provider == "vertex":
+        ai_adapter = VertexAIAdapter()
+    else:
+        ai_adapter = OllamaAdapter()
+        
+    repo = SQLiteChatRepository(db_path=settings.database_path)
+    await repo.initialize()
+    
+    orchestrator = Orchestrator(ai_adapter, mcp_manager, repo)
 
     try:
         with console.status("[bold green]Encendiendo motores MCP...") as status:
@@ -42,14 +53,16 @@ async def interactive_loop():
             tools = await mcp_manager.list_tools()
             console.print(f"✅ [bold]{len(tools)}[/bold] herramientas detectadas en el sistema.")
 
+        session_id = f"cli-{os.getpid()}"
+        
         while True:
             user_input = Prompt.ask("\n[bold cyan]👤 Pregunta[/bold cyan]")
             
             if user_input.lower() in ["salir", "exit", "quit"]:
                 break
 
-            with console.status("[bold yellow]Procesando semánticamente...") as status:
-                response = await orchestrator.process_message(user_input)
+            with console.status("[bold yellow]Procesando...") as status:
+                response = await orchestrator.process_message(user_input, session_id=session_id)
             
             console.print(Panel(response, title="[bold green]🤖 Respuesta[/bold green]", border_style="green"))
 

@@ -14,5 +14,9 @@ Detalles específicos de los adaptadores de entrada y salida.
 - **Transformación**: Mapea las respuestas de los servidores MCP al formato de mensaje del dominio.
 
 ## 3. AI Engine Adapters
-- **VertexAIAdapter**: Gestiona la autenticación con GCP y el envío de prompts/herramientas a Gemini.
-- **OllamaAdapter**: Comunicación con la API local de Ollama (puerto 11434).
+- **VertexAIAdapter**: 
+  - Gestiona la autenticación con GCP y el envío de prompts/herramientas a Gemini.
+  - **Mapeo de Herramientas**: Utiliza un `SchemaMapper` interno para convertir el formato JSON-Schema de MCP al formato nativo de Vertex AI `FunctionDeclaration`.
+- **OllamaAdapter**: 
+  - Comunicación con la API local de Ollama (puerto 11434).
+  - **Tool Calling**: Soporte nativo activado para modelos Llama 3 (8B+) y superiores, utilizando el parámetro `tools` en la petición de chat para evitar dependencias de prompts de sistema complejos.

@@ -15,3 +15,4 @@ logs/
 scratch/
 smoke_test.py
 .coverage
+data/

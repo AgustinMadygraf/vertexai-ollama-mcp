@@ -3,7 +3,7 @@ Path: src/core/domain/ports.py
 """
 from abc import ABC, abstractmethod
 from typing import List, AsyncIterator, Optional
-from src.core.domain.entities import Message, ToolDefinition, ToolCall, ToolResult, CompletionChunk, Intent
+from src.core.domain.entities import Message, ToolDefinition, ToolCall, ToolResult, CompletionChunk, Intent, ChatSession
 
 class AIEnginePort(ABC):
     @abstractmethod
@@ -69,4 +69,20 @@ class InfrastructureMonitorPort(ABC):
     @abstractmethod
     def validate_request_headers(self, headers: dict) -> bool:
         """Valida si los headers de una petición entrante son consistentes con Cloudflare."""
+        pass
+
+class ChatSessionRepositoryPort(ABC):
+    @abstractmethod
+    async def get_session(self, session_id: str) -> ChatSession:
+        """Recupera una sesión de chat con su historial completo."""
+        pass
+
+    @abstractmethod
+    async def save_session(self, session: ChatSession) -> None:
+        """Guarda o actualiza una sesión de chat y sus mensajes."""
+        pass
+
+    @abstractmethod
+    async def clear_session(self, session_id: str) -> None:
+        """Elimina el historial de una sesión específica."""
         pass

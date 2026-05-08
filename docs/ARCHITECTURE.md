@@ -24,4 +24,9 @@ Aplicado en el Core para modelar las entidades de chat y herramientas con un len
 - **Factory Pattern**: Para la instanciación dinámica de motores de IA basados en la configuración de la intención (local vs. cloud).
 
 ## 5. Estrategia de Concurrencia
-Uso intensivo de **Async/Await (Python 3.10+)** para manejar I/O no bloqueante, especialmente en la comunicación con servidores MCP y webhooks externos.
+
+## 6. Persistencia y Gestión de Estado
+Se utiliza una base de datos **SQLite asíncrona** (`aiosqlite`) para mantener el estado de las sesiones de chat entre diferentes turnos de interacción.
+
+- **Patrón de Almacenamiento**: "Borrar y Reinsertar" (Overwrite). Al finalizar cada turno, se persiste el historial completo de la sesión. Esto garantiza que el orden de los mensajes y las llamadas a herramientas sean coherentes.
+- **Formato de Datos**: Las llamadas a herramientas (`tool_calls`) y sus argumentos se almacenan como estructuras JSON serializadas dentro de la tabla de mensajes, permitiendo una reconstrucción fiel del contexto para motores que requieren el historial técnico (como Gemini).
