@@ -27,7 +27,11 @@ Usa `--debug` para inspeccionar el tráfico JSON-RPC con los servidores.
 - **Infraestructura:** Cloudflare Tunnels (Validación & Health Check)
 
 ## 📂 Estructura de Documentación
-- [Discovery](docs/DISCOVERY.md): Investigación y hallazgos preliminares.
+- [Architecture](docs/ARCHITECTURE.md): Principios de diseño (Hexagonal, DDD, SOLID).
+- [Infrastructure](docs/INFRASTRUCTURE.md): Entorno, hardware y alta disponibilidad.
+- [Tech Stack](docs/TECH_STACK.md): Detalle de bibliotecas y herramientas.
+- [Adapters](docs/ADAPTERS.md): Integración con webhooks y servicios externos.
+- [Discovery](docs/DISCOVERY.md): Investigación activa y dudas por resolver.
 - [SRS](docs/SRS.md): Especificación de Requisitos de Software.
 - [TODO](docs/TODO.md): Listado de tareas y progreso.
 

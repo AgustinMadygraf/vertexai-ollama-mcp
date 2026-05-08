@@ -1,56 +1,30 @@
-# Discovery: VertexAI-Ollama MCP CLI
+# Discovery: Research & Active Questions
 
-Este documento registra el proceso de investigación y descubrimiento de las tecnologías clave para el proyecto.
+Este documento registra únicamente las dudas activas y el proceso de investigación en curso. Una vez resueltas, las conclusiones deben moverse a los documentos de Arquitectura, Infraestructura o Stack Tecnológico.
 
-## 1. Model Context Protocol (MCP)
-- **¿Qué es?**: Un estándar abierto que permite a los modelos de IA interactuar con herramientas y datos externos de manera segura.
-- **Componentes clave**:
-  - Servidores: Exponen herramientas y recursos.
-  - Clientes: Consumen las herramientas (nuestro proyecto).
+## 1. Dudas Activas (Investigación en curso)
 
-## 2. Google Cloud Vertex AI
-- **Foco**: Uso de modelos Gemini Pro/Flash.
-- **Integración**: Utilizar el SDK de Vertex AI para Python.
-- **Tool Calling**: Investigar cómo pasar las definiciones de herramientas de MCP al formato esperado por Vertex AI.
+### 1.1 Mapeo de Esquemas MCP a Vertex AI
+- **Pregunta**: ¿Cómo transformar dinámicamente las definiciones de herramientas (JSON Schema) de los servidores MCP al formato `Function Declaration` que requiere el SDK de Vertex AI para Python?
+- **Estado**: Pendiente de implementación de un `SchemaMapper` en el adaptador de Vertex AI.
 
-## 3. Ollama
-- **Foco**: Ejecución local de LLMs (Llama 3, Mistral, etc.).
-- **Integración**: API local (usualmente puerto 11434).
-- **Tool Calling**: Evaluar la compatibilidad de modelos locales con la invocación de herramientas dinámicas.
+### 1.2 Compatibilidad de Tool Calling en Ollama
+- **Pregunta**: ¿Qué modelos locales (Llama 3, Mistral, etc.) soportan nativamente el formato de respuesta de herramientas sin necesidad de prompts de sistema complejos?
+- **Estado**: Investigando modelos optimizados para *function calling* disponibles en la librería de Ollama.
 
-## 4. Patrones de Integración
-- **Arquitectura Hexagonal (Puertos y Adaptadores)**: Se ha seleccionado esta arquitectura para desacoplar el núcleo de la lógica (Core) de las tecnologías externas (Vertex AI, Ollama, MCP).
-- **Domain-Driven Design (DDD)**: Aplicado en el Core para modelar las entidades de chat y herramientas con un lenguaje ubicuo.
-- **Async/Await & Python 3.10+**: Uso intensivo de asincronía y tipado moderno.
-- **Estrategia Local-First (GPU)**: Priorización de modelos de clasificación locales sobre GPU para minimizar latencia y coste.
-- **Hardware Detectado**: AMD Ryzen 5 3400G con Radeon Vega Graphics (Ubuntu 24.04).
-- **Inferencia**: Selección de **OpenVINO** como motor de aceleración para maximizar la APU Ryzen sin dependencias complejas de ROCm.
+### 1.3 GLiNER y Parámetros Opcionales
+- **Pregunta**: ¿Cómo maneja GLiNER las entidades que no están presentes en el texto si se definen en el esquema de la herramienta como obligatorias vs opcionales?
+- **Estado**: Requiere pruebas empíricas con el motor `local-gpu`.
 
-## 5. Auditoría de Arquitectura (SOLID, DDD, Hexagonal)
-- **SOLID**: El sistema cumple con la Inversión de Dependencias (DIP) mediante el uso de Puertos. El `Orchestrator` es agnóstico a la implementación de los motores de IA y clientes MCP.
-- **DDD**: Existe una separación clara de entidades de dominio. El `ChatSession` y `Message` permiten modelar el flujo conversacional, aunque actualmente la CLI es mayoritariamente stateless por mensaje.
-- **Hexagonal**: La estructura de carpetas (`src/core` vs `src/adapters`) refleja correctamente el patrón. Los puertos definidos en `ports.py` actúan como el contrato del dominio.
-- **Observability**: Implementada mediante logs basados en archivos. Se detecta la necesidad de logs estructurados (JSON) para facilitar la integración con stacks de monitoreo cuando se escale a Webhooks.
+### 1.4 Benchmark de Latencia en APU (OpenVINO)
+- **Pregunta**: ¿Cuál es el límite de concurrencia en el Ryzen 3400G antes de que la inferencia supere los 5 segundos?
+- **Estado**: Pendiente ejecutar script de benchmark con múltiples peticiones simultáneas.
 
-## 6. Hallazgos y Despeje de Dudas (Chatwoot & Extracción)
-- **Extracción de Argumentos**: Se ha identificado **GLiNER** como una biblioteca de extracción de entidades (NER) zero-shot extremadamente ligera y potente, ideal para el motor `local-gpu`. Permite extraer parámetros definidos en tiempo de ejecución sin un LLM completo.
-- **API de Chatwoot**: Confirmado el uso de `POST /api/v1/accounts/{account_id}/conversations/{conversation_id}/messages` para enviar respuestas. Se requiere un `api_access_token`.
-- **Estrategia de Respuesta Asíncrona**: Para cumplir con el timeout de 5s, el adaptador de webhook debe delegar el procesamiento al `Orchestrator` de forma asíncrona (ej. mediante `asyncio.create_task` o una cola de tareas) y responder `200 OK` al instante.
-- **Documentación de Contrato**: Se ha creado `docs/CHATWOOT_CONTRACT.md` para formalizar el acuerdo entre el adaptador de entrada y la lógica de negocio, siguiendo las mejores prácticas de Arquitectura Hexagonal.
+### 1.5 Persistencia de Historial con Herramientas
+- **Pregunta**: ¿Cómo estructurar la tabla de `Messages` en SQLite para almacenar no solo el texto, sino el `call_id` y el `result` de las herramientas MCP para mantener la coherencia del contexto en Gemini/Ollama?
+- **Estado**: Diseño de esquema de base de datos en fase preliminar.
 
-## 7. Próximos Pasos de Investigación (Priorizados)
-- **Persistencia de Contexto Conversacional**: Implementar `ChatSessionRepository` usando SQLite para que el orquestador tenga memoria del historial.
-- **Benchmark de Concurrencia en APU**: Medir el impacto de múltiples webhooks simultáneos sobre la latencia de inferencia de OpenVINO.
-- **Validación de Argumentos Opcionales**: Investigar cómo GLiNER maneja esquemas de herramientas con parámetros opcionales.
-
-## 9. Decisiones de Arquitectura Tomadas
-- **Infraestructura**: Se adoptó un **Composite Adapter** para soportar Cloudflare y ngrok simultáneamente, garantizando alta disponibilidad.
-- **Orquestación**: Se implementó la **Opción D** para el flujo de mensajes, priorizando la UX mediante el manejo de saludos y aclaraciones proactivas.
-
-## 8. Monitoreo de Infraestructura (Cloudflare & ngrok)
-- **Estrategia de Alta Disponibilidad (HA)**: Se ha incorporado **ngrok** como túnel secundario/redundante. Esto permite mantener la conectividad si Cloudflare presenta degradación o problemas de configuración.
-- **Validación de Headers**: Además de `CF-Ray` para Cloudflare, se validan headers específicos de ngrok como `x-forwarded-for` para asegurar el origen de las peticiones.
-- **API de Tunnels**:
-  - Cloudflare: `GET /accounts/{account_id}/tunnels` para estado global.
-  - ngrok: `GET http://localhost:4040/api/tunnels` para monitoreo local dinámico.
-- **Arquitectura de Salud**: El "Health Aggregator" ahora soporta múltiples proveedores de túnel, reportando un estado consolidado en el endpoint `/health`.
+## 2. Historial de Resoluciones
+*(Cuando una duda se resuelva, mover el resumen aquí antes de archivarla en la documentación permanente)*
+- **Chatwoot API**: Confirmado el uso de webhooks asíncronos para evitar timeouts. (Conclusión movida a `docs/ADAPTERS.md`).
+- **HA Infraestructura**: ngrok integrado como redundancia exitosamente. (Conclusión movida a `docs/INFRASTRUCTURE.md`).
